@@ -85,3 +85,42 @@ The fixture should clear the 500-token cutoff with room for later edits. In Unit
 After installing the development dependencies, `make check` passed Ruff, Black, and mypy. `LLM_PROVIDER=mock make test-unit` finished with 376 passed and 52 expected failures from other issues.
 
 **Draft PR feedback received from:** None at the time of this check-in.
+
+## Unit 10 — Iteration & reflection
+
+### Reviewer feedback
+
+**Feedback received**
+
+- [ ] Yes
+- [x] No — still awaiting review
+
+**Summary of feedback**
+
+I checked [PathReview PR #109](https://github.com/codepath/pathreview-ai201-fa26-howard/pull/109) on November 24. There were no submitted reviews, inline review comments, or conversation comments, so there was no feedback to address.
+
+**How you responded**
+
+---
+
+### Reflection
+
+**What was harder than you expected?**
+
+Getting from the first failing assertion to a clean set of checks took longer than writing the fixture. Pytest reported issue #63 as an expected failure until the focused run used `--runxfail` and exposed `assert 51 > 100`. The full checks also needed a separate dependency setup after the 23 tests in the scorer module were already passing.
+
+**What did you learn about working in a large codebase?**
+
+A failing test can come from its own fixture, so it helps to trace the assertion into the code that produces the result before deciding where to make a change. In `agent/tools/readme_scorer.py`, `ReadmeScorer._score_readme` counts whitespace-separated words and starts the comprehensive category at 500. That let me keep the fix in `tests/unit/test_readme_scorer.py` and preserve the scoring behavior that other tests and callers depend on.
+
+**How did AI tools help — and where did they fall short?**
+
+I used Codex to trace the issue from the test to the scorer, draft a realistic README fixture, and run the focused and full checks. Generating a plausible README did not establish that it met the scorer's definition of comprehensive or that its headings, badge syntax, and demo link triggered the right flags. Measuring the fixture at 548 whitespace-separated words and seeing all 23 scorer tests pass gave me evidence that the draft met the test's requirements.
+
+**What would you do differently if you started over?**
+
+I would install the development dependencies at the start and record a baseline for `make check` and `make test-unit` before changing the test. I would also run the focused test with `--runxfail` as soon as I found the strict marker, then put the exact failing assertion and the 500-word threshold into the plan. That order would give me a clearer way to distinguish setup failures from failures caused by the patch.
+
+**What are you most proud of from this module?**
+
+I’m most proud that the final test captures the original intent of issue #63 with a focused change. The new fixture exercises the comprehensive category, all five quality signals, and the aggregate score, and the test passes with the expected-failure marker removed. PR #109 also gives a reviewer a single test command to verify the fix and a CI run showing that all five jobs passed.
