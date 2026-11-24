@@ -64,3 +64,24 @@ The fixture should clear the 500-token cutoff with room for later edits. In Unit
 **Next steps:** Run the repo-wide self-review targets, open the draft upstream PR, and verify the pull request checks.
 
 **Blockers:** The focused scorer suite runs locally. The repo-wide checks need the development dependencies, which are unavailable in the local environment.
+
+---
+
+### Check-in 2 (end of week)
+
+**PR link:** [PathReview PR #109](https://github.com/codepath/pathreview-ai201-fa26-howard/pull/109)
+
+**Branch:** `test/63-readme-scorer-fixture`
+
+**What you built:** Replaced the 51-word README test fixture with a realistic 548-word example that exercises the scorer’s comprehensive category and all five quality signals. The test now asserts the 500-word minimum and runs without the issue #63 expected-failure marker.
+
+**Tests added or updated:** Updated `tests/unit/test_readme_scorer.py`, specifically `test_readme_with_all_quality_signals`. It checks the word count and category, installation and usage sections, badges, demo link, tech stack, and overall score. The updated test and the rest of the scorer module passed locally, for 23 passes.
+
+**Self-review confirmation**
+
+- [ ] `make check` passes
+- [ ] `make test-unit` passes
+
+`make check` stopped because Ruff was unavailable. `make test-unit` stopped during collection because runtime packages were missing from the local environment. The PR checks run separately in GitHub Actions.
+
+**Draft PR feedback received from:** None at the time of this check-in.
