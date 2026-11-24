@@ -54,3 +54,13 @@ The scorer counts whitespace-separated tokens with `len(content.split())` and us
 **Blockers or open questions**
 
 The fixture should clear the 500-token cutoff with room for later edits. In Unit 9, I’ll confirm that the rewritten fixture still triggers every quality signal before removing the expected-failure marker.
+
+## Unit 9 — Solution building & PR submission
+
+### Check-in 1 (mid-week)
+
+**Current progress:** Implemented Steps 1 and 2 from PLAN.md. The replacement fixture describes a trail maintenance app, has 548 whitespace-separated tokens, and includes each quality signal. The test now asserts the 500-token minimum and still checks the category, each quality flag, and the score. It passed with `--runxfail`, then passed again after removing the issue #63 marker.
+
+**Next steps:** Run the repo-wide self-review targets, open the draft upstream PR, and verify the pull request checks.
+
+**Blockers:** The focused scorer suite runs locally. The repo-wide checks need the development dependencies, which are unavailable in the local environment.
