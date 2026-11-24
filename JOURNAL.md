@@ -79,9 +79,9 @@ The fixture should clear the 500-token cutoff with room for later edits. In Unit
 
 **Self-review confirmation**
 
-- [ ] `make check` passes
-- [ ] `make test-unit` passes
+- [x] `make check` passes
+- [x] `make test-unit` passes
 
-`make check` stopped because Ruff was unavailable. `make test-unit` stopped during collection because runtime packages were missing from the local environment. The PR checks run separately in GitHub Actions.
+After installing the development dependencies, `make check` passed Ruff, Black, and mypy. `LLM_PROVIDER=mock make test-unit` finished with 376 passed and 52 expected failures from other issues.
 
 **Draft PR feedback received from:** None at the time of this check-in.
