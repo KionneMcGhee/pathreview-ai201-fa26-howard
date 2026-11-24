@@ -29,3 +29,20 @@ The README scorer's test for a high-quality README uses a short sample document 
 **Issue claim comment:** [ ] Comment posted on the upstream GitHub issue (requires manual action; connected app does not have comment permission on the upstream repository)
 
 **Local environment note:** The repository has not been cloned and launched on my Mac during this task; the localhost confirmation is deliberately left unchecked.
+
+## Unit 8 — Reproduction & solution planning
+
+**Reproduction summary**
+
+I ran the README scorer unit tests locally against the files from branch commit `37fe8a7` using Python 3.14.7, pytest 9.2.0, and structlog 25.5.0. The test module reported 22 passed and 1 expected failure. Running the targeted test with `--runxfail` surfaced the assertion failure `assert 51 > 100`. The scorer reported `word_count=51` and `category=minimal`, while the test is intended to exercise a comprehensive README.
+
+**Reproduction commands**
+
+From the repository root with the test dependencies available:
+
+```bash
+python -m pytest -q -rx tests/unit/test_readme_scorer.py
+python -m pytest --runxfail -q tests/unit/test_readme_scorer.py::TestReadmeScorer::test_readme_with_all_quality_signals
+```
+
+The scorer counts whitespace-separated tokens with `len(content.split())` and uses 500 as the inclusive threshold for `comprehensive`. The failing fixture lives in `tests/unit/test_readme_scorer.py`. The count and category come from `ReadmeScorer._score_readme` in `agent/tools/readme_scorer.py`.
